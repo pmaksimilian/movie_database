@@ -21,6 +21,11 @@ function showResults(page, query) {
         resultContainer.innerHTML = "";
 
         let results = response.Search;
+        let pagination = document.getElementById("pagination");
+
+        if(!results){
+            pagination.innerHTML = "We found nothing!";
+        }
         results.forEach(function (element) {
             let resultTitle = document.createElement("p");
             let resultItem = document.createElement("div");
@@ -40,8 +45,8 @@ function showResults(page, query) {
             resultContainer.appendChild(resultItem);
         });
 
-        let pagination = document.getElementById("pagination");
-        pagination.innerHTML = "";
+        
+        pagination.innerHTML = "Pages: ";
 
         let numberOfResults = response.totalResults;
 
@@ -50,6 +55,9 @@ function showResults(page, query) {
         for (let i = 1; i <= pages; i++) {
             let onePage = document.createElement("span");
             onePage.innerHTML = `${i} `;
+            if (i === page) {
+                onePage.style = "font-weight: bold;"
+            }
             onePage.addEventListener("click", function(event) {
                 showResults(i, query);
             });
